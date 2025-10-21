@@ -154,12 +154,12 @@ export const useChatStore = create<ChatState & ChatActions>()(
           });
 
           // Remove the temporary assistant message
-          set((state) => ({
+          set((state: ChatState) => ({
             sessions: state.sessions.map((session) =>
               session.id === sessionId
                 ? {
                     ...session,
-                    messages: session.messages.filter((msg) => msg.id !== assistantMessageId),
+                    messages: session.messages.filter((msg: Message) => msg.id !== assistantMessageId),
                   }
                 : session
             ),
@@ -174,8 +174,8 @@ export const useChatStore = create<ChatState & ChatActions>()(
       },
 
       deleteSession: (sessionId: string) => {
-        set((state) => {
-          const newSessions = state.sessions.filter((s) => s.id !== sessionId);
+        set((state: ChatState) => {
+          const newSessions = state.sessions.filter((s: ChatSession) => s.id !== sessionId);
           const newCurrentSessionId =
             state.currentSessionId === sessionId
               ? newSessions[0]?.id || null
